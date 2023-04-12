@@ -136,7 +136,9 @@ SELECT COUNT (*),
         ELSE "Flop"
     END AS "Success_Chart"
 FROM top_movies
-GROUP BY Success_Chart;
+GROUP BY Success_Chart
+ORDER BY Worldwide desc;
 
 /*AND*/
-SELECT title, studio, worldwide, year FROM top_movies WHERE Worldwide > 1000 AND year > 2012;
+SELECT title, worldwide, year FROM top_movies WHERE Worldwide > 1000 AND year > 2012;
+
