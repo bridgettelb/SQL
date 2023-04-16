@@ -1,0 +1,69 @@
+--Create a video game database
+
+/**VIDEO GAMES:
+Disney Dreamlight, ($30), (5), "Youthful", (9)
+Zelda Ocarina, ($60), (10), "Fantasy"(4)
+Zelda Windwaker, ($60), (12), "Fantasy"(7)
+Harry Potter, ($60), (20), "Fantasy",(10)
+Animal Crossing, ($30), (10), "Youthful"(8)
+Tomb Raider, ($45), (12), "Violence"(4)
+Skyrim, ($50), (14), "Fantasy"(6)
+GTA, ($60), (12), "Violence"(8)
+Basketball Special, ($75), (4), "Sports"(7)
+Football, ($45), (6), "Sports"(6)
+Donkey Kong, ($35) (6), "Youthful"(5)
+Star Fox, ($20), (10), "Action"(3)
+RDR, ($50), (7), "Action"(9)
+Sims4, ($65), (4), "Youthful"(8)
+Crash Bandicoot, ($25), (10), "Youthful"(4)
+**/
+
+CREATE TABLE Video_Games (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price TEXT, quantity INTEGER, genre TEXT, popularity INTEGER );
+
+INSERT INTO Video_Games VALUES (1, "Disney Dreamlight", 30, 5, "Youthful", 9);
+INSERT INTO Video_Games VALUES (2, "Zelda Ocarina", 60, 1, "Fantasy", 4);
+INSERT INTO Video_Games VALUES (3, "Zelda Windwaker", 60, 12, "Fantasy", 7);
+INSERT INTO Video_Games Values (4, "Harry Potter", 60, 20, "Fantasy", 10);
+INSERT INTO Video_Games VALUES (5, "Animal Crossing", 30, 10, "Youthful", 8);
+INSERT INTO Video_Games VALUES (6, "Tomb Raider", 45, 12, "Violence", 4);
+INSERT INTO Video_Games VALUES (7, "Skyrim", 50, 14, "Fantasy", 6);
+INSERT INTO Video_Games VALUES (8, "GTA", 60, 12, "Violence", 8);
+INSERT INTO Video_Games VALUES (9, "Basketball Special", 75, 4, "Sports", 7);
+INSERT INTO Video_Games VALUES (10, "Football", 45, 6, "Sports", 6);
+INSERT INTO Video_Games VALUES (11, "Donkey Kong", 35, 6, "Youthful", 5);
+INSERT INTO Video_Games VALUES (12,"Star Fox", 20, 10, "Action", 3);
+INSERT INTO Video_Games VALUES (13, "RDR", 50, 7, "Action", 9);
+INSERT INTO Video_Games VALUES (14, "SIMS4", 65, 4, "Youthful", 8);
+INSERT INTO Video_Games VALUES (15, "Crash Bandicoot", 25, 10, "Youthful", 4);
+
+--Which games are $45 or less? How much is there in stock? Also display their price and genre and order by price.
+
+SELECT quantity, name, price, genre
+FROM Video_Games
+WHERE price <= 45
+ORDER BY price asc;
+
+--What does the average game cost? Please round. 
+
+SELECT ROUND(AVG(price)) as Avgerage_Price FROM Video_Games;
+
+--What is the most expensive game in the Youthful category?
+
+SELECT MAX(price) as price, name FROM Video_Games
+WHERE genre LIKE 'Youthful';
+
+--What are the 5 most popular games? Just include name and populairty.
+
+SELECT name, popularity FROM Video_Games
+ORDER BY popularity desc
+LIMIT 5;
+
+--How much quantity is in each genre?
+
+SELECT quantity, genre FROM Video_Games
+GROUP BY genre;
+
+--What is the most popular game that is under $30?
+
+SELECT name, MAX(popularity) popularity, price FROM Video_Games
+WHERE price < 30; 
