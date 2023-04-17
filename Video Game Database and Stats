@@ -20,21 +20,22 @@ Crash Bandicoot, ($25), (10), "Youthful"(4)
 
 CREATE TABLE Video_Games (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price TEXT, quantity INTEGER, genre TEXT, popularity INTEGER );
 
-INSERT INTO Video_Games VALUES (1, "Disney Dreamlight", 30, 5, "Youthful", 9);
-INSERT INTO Video_Games VALUES (2, "Zelda Ocarina", 60, 1, "Fantasy", 4);
-INSERT INTO Video_Games VALUES (3, "Zelda Windwaker", 60, 12, "Fantasy", 7);
-INSERT INTO Video_Games Values (4, "Harry Potter", 60, 20, "Fantasy", 10);
-INSERT INTO Video_Games VALUES (5, "Animal Crossing", 30, 10, "Youthful", 8);
-INSERT INTO Video_Games VALUES (6, "Tomb Raider", 45, 12, "Violence", 4);
-INSERT INTO Video_Games VALUES (7, "Skyrim", 50, 14, "Fantasy", 6);
-INSERT INTO Video_Games VALUES (8, "GTA", 60, 12, "Violence", 8);
-INSERT INTO Video_Games VALUES (9, "Basketball Special", 75, 4, "Sports", 7);
-INSERT INTO Video_Games VALUES (10, "Football", 45, 6, "Sports", 6);
-INSERT INTO Video_Games VALUES (11, "Donkey Kong", 35, 6, "Youthful", 5);
-INSERT INTO Video_Games VALUES (12,"Star Fox", 20, 10, "Action", 3);
-INSERT INTO Video_Games VALUES (13, "RDR", 50, 7, "Action", 9);
-INSERT INTO Video_Games VALUES (14, "SIMS4", 65, 4, "Youthful", 8);
-INSERT INTO Video_Games VALUES (15, "Crash Bandicoot", 25, 10, "Youthful", 4);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Disney Dreamlight", 30, 5, "Youthful", 9);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Zelda Ocarina", 60, 1, "Fantasy", 4);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Zelda Windwaker", 60, 12, "Fantasy", 7);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) Values ("Harry Potter", 60, 20, "Fantasy", 10);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Animal Crossing", 30, 10, "Youthful", 8);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Tomb Raider", 45, 12, "Violence", 4);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Skyrim", 50, 14, "Fantasy", 6);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("GTA", 60, 12, "Violence", 8);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Basketball Special", 75, 4, "Sports", 7);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Football", 45, 6, "Sports", 6);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Donkey Kong", 35, 6, "Youthful", 5);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Star Fox", 20, 10, "Action", 3);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("RDR", 50, 7, "Action", 9);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("SIMS4", 65, 4, "Youthful", 8);
+INSERT INTO Video_Games (name, price, quantity, genre, popularity) VALUES ("Crash Bandicoot", 25, 10, "Youthful", 4);
+
 
 --Which games are $45 or less? How much is there in stock? Also display their price and genre and order by price.
 
