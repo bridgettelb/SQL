@@ -1,3 +1,5 @@
+#Here I used SQL to aggregate data using multiple joints to select relevant information and group movies by thier success.
+
 /* Source: http://www.boxofficemojo.com/alltime/world/ */
 CREATE TABLE top_movies(
    Rank        INTEGER,
@@ -113,32 +115,38 @@ INSERT INTO top_movies(Rank,Title,Studio,Worldwide,Domestic,DomesticPct,Overseas
 INSERT INTO top_movies(Rank,Title,Studio,Worldwide,Domestic,DomesticPct,Overseas,OverseasPct,Year) VALUES (100,'Tangled','BV',591.80,200.80,0.34,391.00,0.66,2010);
 
 SELECT * FROM top_movies;
-SELECT AVG(Worldwide) FROM top_movies;
-SELECT MAX(Worldwide) FROM top_movies;
-SELECT MIN(Worldwide) FROM top_movies;
 
-SELECT title, SUM (Worldwide) AS Worldwide_Average FROM top_movies
+--What are the max, min, and average year used to create movies in this database?
+
+SELECT MAX(year) FROM top_movies;
+SELECT MIN(year) FROM top_movies;
+SELECT ROUND(AVG(year)) FROM top_movies;
+
+--What about those numbers per category in the data (using HAVING)?
+
+SELECT title, SUM(Worldwide) AS Worldwide_Total FROM top_movies
 GROUP BY title
-HAVING Worldwide_Average > 1000
-ORDER BY Worldwide_Average asc;
+HAVING Worldwide_Total > 1000
+ORDER BY Worldwide_Total asc;
 
-SELECT studio, SUM (worldwide) AS Studio_Results FROM top_movies
-GROUP BY studio
-ORDER BY Worldwide DESC;
+--What ways are there to group the data values that don’t exist yet (using CASE)?
 
-
-SELECT COUNT (*),
+SELECT COUNT (*) AS 'Total Movies',
     CASE
         WHEN Worldwide > 1000 THEN "Blockbuster"
-        WHEN Worldwide > 900 THEN "Success"
+        WHEN Worldwide > 900 THEN "Very Successful"
         WHEN Worldwide > 800 THEN "Average Success"
-        WHEN Worldwide >700 THEN "Below Average"
-        ELSE "Flop"
+        WHEN Worldwide > 700 THEN "Successful"
+        ELSE "Below Average"
     END AS "Success_Chart"
 FROM top_movies
 GROUP BY Success_Chart
 ORDER BY Worldwide desc;
 
-/*AND*/
-SELECT title, worldwide, year FROM top_movies WHERE Worldwide > 1000 AND year > 2012;
+--What interesting ways are there to filter the data (using AND/OR)?
+
+SELECT title, worldwide, year 
+FROM top_movies
+WHERE Worldwide > 1000 AND year > 2012
+ORDER BY year asc;
 
