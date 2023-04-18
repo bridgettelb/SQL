@@ -1,4 +1,4 @@
-/* Create table about the people and what they do here */
+# In this SQL I created multiple tables to aggregate data and use joints to sort out relevant information.
 
 CREATE TABLE Singers
 (id INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -6,37 +6,43 @@ name TEXT,
 genre INTEGER
 );
 
-INSERT INTO Singers (name, genre)
-VALUES ("Justin_Bieber", 1);
-INSERT INTO Singers (name, genre)
-VALUES ("Lil_Wayne", 4);
-INSERT INTO Singers (name, genre)
-VALUES ("Taylor_Swift", 2);
-INSERT INTO Singers (name, genre)
-VALUES ("Kid_Rock",3);
-INSERT INTO Singers (name, genre)
-VALUES ("Drake", 4);
-INSERT INTO Singers (name, genre)
-VALUES ("Keith_Urban", 2);
-INSERT INTO Singers (name, genre)
-VALUES ("Rihanna", 1);
-INSERT INTO Singers (name,genre)
-VALUES ("Kurt Cobain", 3);
+INSERT INTO Singers (name, genre) VALUES ("Justin Bieber", 1);
+INSERT INTO Singers (name, genre) VALUES ("Lil Wayne", 4);
+INSERT INTO Singers (name, genre) VALUES ("Taylor Swift", 2);
+INSERT INTO Singers (name, genre) VALUES ("Kid Rock",3);
+INSERT INTO Singers (name, genre) VALUES ("Drake", 4);
+INSERT INTO Singers (name, genre) VALUES ("Keith Urban", 2);
+INSERT INTO Singers (name, genre) VALUES ("Rihanna", 1);
+INSERT INTO Singers (name, genre) VALUES ("Kurt Cobain", 3);
+INSERT INTO Singers (name, genre) VALUES ("Kelly Clarkson", 1);
+INSERT INTO Singers (name, genre) VALUES ("Britney Spears", 1);
+INSERT INTO Singers (name, genre) VALUES ("Kendrick Lamar", 4);
+INSERT INTO Singers (name, genre) VALUES ("Chris Daughtry", 3);
+INSERT INTO Singers (name, genre) VALUES ("Whitney Houston", 1);
+INSERT INTO Singers (name, genre) VALUES ("Carrie Underwood", 2);
+INSERT INTO Singers (name, genre) VALUES ("Olivia Rodrigo", 1);
 
 CREATE TABLE Stats
 (id INTEGER PRIMARY KEY AUTOINCREMENT,
 state_born TEXT,
-year_born INTEGER);
+year_born INTEGER,
+number_one_hits INTEGER);
 
-INSERT INTO Stats (state_born, year_born) VALUES ("Ontario", 1994);
-INSERT INTO Stats (state_born, year_born) VALUES ("Louisiana", 1982);
-INSERT INTO Stats (state_born, year_born) VALUES ("Pennsylvania", 1989);
-INSERT INTO Stats (state_born, year_born) VALUES("Michigan", 1971);
-INSERT INTO Stats (state_born, year_born) VALUES ("Ontario", 1984);
-INSERT INTO Stats (state_born, year_born) VALUES ("Northland", 1967);
-INSERT INTO Stats (state_born, year_born) VALUES ("Saint_Michaels", 1988);
-INSERT INTO Stats (state_born, year_born) VALUES ("Washington", 1967);
-
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Ontario", 1994,8);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Louisiana", 1982,2);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Pennsylvania", 1989,9);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES("Michigan", 1971,0);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Ontario", 1984,11);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Northland", 1967,22);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Saint_Michaels", 1988,14);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Washington", 1967,0);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Texas", 1982, 3);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Mississippi", 1981, 4);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Louisiana", 1982, 2);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("North Carolina", 1979, 0);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("New Jersey", 1963, 7);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("Oklahoma", 1983, 21);
+INSERT INTO Stats (state_born, year_born,number_one_hits) VALUES ("California", 2003, 2);
 
 CREATE TABLE Music_type
 (id INTEGER PRIMARY KEY, genre TEXT);
@@ -45,16 +51,60 @@ INSERT INTO Music_type (id, genre) VALUES (2, "Country");
 INSERT INTO Music_type (id, genre)  VALUES (3, "Rock");
 INSERT INTO music_type (id, genre) VALUES  (4, "Rap");
 
-SELECT Singers.name, music_type.genre
-FROM Singers
-LEFT JOIN music_type
-ON Singers.genre = music_type.id;
+--What is each singers name with their genre and number of #1 hits they have had? Order by least to greatest.
 
-/* Which genre is each artist in and where is that arist from?*/
-SELECT Singers.name, music_type.genre, stats.state_born
+SELECT Singers.name, music_type.genre, stats.number_one_hits
 FROM Singers
 LEFT JOIN music_type
 ON Singers.genre = music_type.id
-LEFT JOIN Stats
-ON Singers.id = stats.id
-ORDER BY music_type.genre desc;
+JOIN Stats
+ON singers.id = stats.id
+ORDER BY stats.number_one_hits asc;
+
+--Where is each pop artist from?
+
+SELECT singers.name, stats.state_born
+FROM singers
+JOIN stats
+ON singers.id = stats.id
+WHERE singers.genre = 1;
+
+--How many number one hits does each genre have?
+
+SELECT SUM(stats.number_one_hits) AS total_hits, music_type.genre
+FROM singers
+JOIN stats
+ON singers.id = stats.id
+JOIN music_type
+ON singers.genre = music_type.id
+GROUP BY singers.genre;
+
+--What is the average year born for the singers in the country genre?
+
+SELECT ROUND(AVG(stats.year_born)) as average_year_born, music_type.genre
+FROM singers
+JOIN stats
+ON singers.id = stats.id
+JOIN music_type
+ON singers.genre = music_type.id
+WHERE music_type.id = 2;
+
+--What is the total number of hits for pop artists born after 1980? 
+
+SELECT SUM(stats.number_one_hits) AS total_hits, music_type.genre
+FROM singers
+JOIN stats
+ON singers.id = stats.id
+JOIN music_type
+ON singers.genre = music_type.id
+WHERE stats.year_born > 1980
+AND singers.genre = 1; 
+
+--Which singers from the country genre were born after 1980?
+
+SELECT singers.name, stats.year_born
+FROM singers
+JOIN stats
+ON singers.id = stats.id
+WHERE stats.year_born > 1980
+AND singers.genre = 2; 
