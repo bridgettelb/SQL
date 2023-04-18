@@ -82,7 +82,7 @@ FROM Spotifydata
 GROUP BY artist_name
 HAVING total_songs >= 3;
 
-#Lastly, I wanted to find out if songs with slower tempos were just as popular with songs with faster tempos.
+#I decided I wanted to find out if songs with slower tempos were just as popular with songs with faster tempos.
 
 SELECT 
   CASE 
@@ -93,3 +93,18 @@ SELECT
   AVG(popularity) as avg_popularity
 FROM Spotifydata
 GROUP BY tempo_group;
+
+#And then lastly, I wanted to create a table that showed artist with a popularity over 90 to be considered a "Top Star".
+
+WITH popularity_average_CTE AS (
+SELECT s.artist_name,
+AVG(s.popularity) AS average_popularity
+FROM SpotifyData s 
+GROUP BY s.artist_name
+)
+ 
+SELECT  artist_name,
+        average_popularity,
+        'Top Star' AS tag
+FROM popularity_average_CTE
+WHERE average_popularity>=90;
