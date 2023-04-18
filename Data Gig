@@ -1,4 +1,4 @@
-#Here I used SQL to aggregate data using multiple joints to select relevant information and group movies by thier success.
+#Here I used SQL to aggregate data using multiple tables to select relevant information and group movies by thier success.
 
 /* Source: http://www.boxofficemojo.com/alltime/world/ */
 CREATE TABLE top_movies(
