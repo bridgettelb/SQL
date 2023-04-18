@@ -29,17 +29,67 @@ time_signature integer NOT NULL
 #Next, I explored the data using the following SQL. 
 
 #First I determined the avg popularity, danceability, and energy by artist and track. 
+
 SELECT
-artist_name
-,track_name
-,avg(popularity)
-,avg(danceability)
-,avg(energy)
+artist_name,
+track_name,
+avg(popularity),
+avg(danceability),
+avg(energy)
 FROM BIT_DB.spotifydata
 GROUP BY artist_name, track_name
 
-#Then I determined who the Top 10 artists are by popularity
+#Then I determined who the Top 10 artists are by popularity:
+
 SELECT track_name, artist_name, popularity
 FROM BIT_DB.spotifydata
 ORDER BY popularity desc
 LIMIT 10
+
+#I also wanted to know what was the average danceability for the 10 most popular songs?
+
+SELECT AVG(danceability) AS avg_danceability
+FROM (
+  SELECT track_name, popularity, danceability
+  FROM Spotifydata
+  ORDER BY popularity DESC
+  LIMIT 10)
+   Spotifydata;
+   
+#Which song has the most energy and is the loudest?
+
+SELECT track_name, MAX(energy) AS max_energy_song, MAX(loudness) AS max_loudness_song
+FROM Spotifydata;
+
+#What is the average liveness of songs that are mostly accoustic?
+
+SELECT AVG(liveness) AS avg_acoustic_liveness
+FROM Spotifydata
+WHERE acousticness > 0.7;
+
+#Which artist has the most songs in the top 50?
+
+SELECT COUNT(artist_name) total_songs, artist_name
+FROM Spotifydata 
+GROUP BY artist_name
+ORDER BY COUNT(artist_name) desc
+LIMIT 1;
+
+#Which artist has more than 3 songs total in the top 50?
+
+SELECT COUNT(artist_name) total_songs, artist_name
+FROM Spotifydata 
+GROUP BY artist_name
+HAVING total_songs >= 3;
+
+#Lastly, I wanted to find out if songs with slower tempos were just as popular with songs with faster tempos.
+
+SELECT 
+  CASE 
+    WHEN tempo < 100 THEN 'Slow'
+    WHEN tempo >= 100 AND tempo < 120 THEN 'Moderate'
+    ELSE 'Fast'
+  END as tempo_group,
+  AVG(popularity) as avg_popularity
+FROM Spotifydata
+GROUP BY tempo_group;
