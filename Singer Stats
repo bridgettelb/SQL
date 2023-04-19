@@ -1,4 +1,4 @@
-# In this SQL code, I created multiple tables to aggregate data and use joints to sort out relevant information.
+# In this SQL project, I created multiple tables to aggregate data and use joints to sort out relevant information.
 
 CREATE TABLE Singers
 (id INTEGER PRIMARY KEY AUTOINCREMENT, 
