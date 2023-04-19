@@ -114,5 +114,3 @@ GROUP BY e.firstname
 ORDER BY total_sales desc
 LIMIT 1;
 
-.
-
